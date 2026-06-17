@@ -1,0 +1,47 @@
+.navArrows {
+  position: absolute;
+  padding: 10px 0;
+  width: 60px;
+  right: -80px;
+  background-color: #444;
+  border-radius: 35px;
+  z-index: 98;
+  list-style: none;
+  bottom: 0;
+  box-shadow: 0 0 30px -5px rgba(0,0,0,.15);
+}
+
+@media (max-width: 1024px) {
+  .navArrows {
+    background-color: rgba(0,0,0,.6);
+    width: 48px;
+    right: 10px;
+    bottom: 10px;
+    padding: 5px 0;
+    border: 2px solid #04b4e0;
+  }
+}
+
+.arrowRight,
+.arrowLeft {
+  display: block;
+  position: relative;
+  text-align: center;
+  color: #b5b6b7;
+  padding: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 1024px) {
+  .arrowRight,
+  .arrowLeft {
+    font-size: 24px;
+  }
+}
+
+.arrowRight:hover,
+.arrowLeft:hover {
+  color: #04b4e0;
+}

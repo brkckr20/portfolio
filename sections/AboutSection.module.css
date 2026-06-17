@@ -1,0 +1,167 @@
+.colInner {
+  padding-right: 15px;
+}
+
+.testimonialGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 25px;
+}
+
+.testimonial {
+  text-align: center;
+  border: 2px solid #444;
+  border-radius: 20px;
+  margin: 45px 2px 10px;
+  padding: 0 25px 15px 25px;
+}
+
+.testimonialImg img {
+  max-width: 90px;
+  max-height: 90px;
+  margin: -45px auto 20px;
+  border-radius: 90px;
+  box-shadow: 0px 10px 10px -8px rgba(0,0,0,.22);
+}
+
+.testimonialText {
+  text-align: left;
+  font-style: italic;
+}
+
+.testimonialText p {
+  color: #d5d5d5;
+  font-size: 15px;
+}
+
+.testimonialAuthor {
+  position: relative;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.authorName {
+  margin: 0;
+  font-size: 15px;
+  color: #f5f5f5;
+}
+
+.authorCompany {
+  color: #a5a6a7;
+  font-size: 13px;
+  font-weight: 300;
+  margin: 0;
+}
+
+.quoteIcon {
+  position: absolute;
+  font-size: 30px;
+  right: 0;
+  top: 7px;
+  color: #04b4e0;
+  opacity: .5;
+}
+
+.clientGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.clientBlock {
+  text-align: center;
+  opacity: .7;
+  transition: all 0.2s ease-in-out;
+  padding: 15px;
+  margin-bottom: 15px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.clientBlock:hover {
+  opacity: 1;
+}
+
+.clientBlock img {
+  max-width: 100%;
+  height: auto;
+}
+
+.pricingGrid {
+  display: flex;
+  gap: 30px;
+}
+
+.pricingCol {
+  flex: 1;
+}
+
+.pricingPackage {
+  background-color: #333;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+}
+
+.highlightCol .pricingPackage {
+  background-color: #444;
+  box-shadow: 0 0 30px -5px rgba(0,0,0,.15);
+}
+
+.pricingHeading {
+  font-size: 24px;
+  font-weight: 600;
+  color: #f5f5f5;
+  margin-bottom: 15px;
+}
+
+.pricingAmount {
+  font-size: 48px;
+  font-weight: 700;
+  color: #04b4e0;
+  margin-bottom: 20px;
+}
+
+.pricingAmount small {
+  display: block;
+  font-size: 14px;
+  font-weight: 300;
+  color: #bbb;
+}
+
+.pricingButton {
+  margin-bottom: 20px;
+}
+
+.pricingRow {
+  padding: 8px 0;
+  color: #d5d5d5;
+  border-bottom: 1px solid #444;
+  font-size: 14px;
+}
+
+.funFact {
+  background-color: #333;
+  border-radius: 10px;
+  padding: 25px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.funFact i {
+  font-size: 36px;
+  color: #04b4e0;
+  opacity: .7;
+}
+
+.funFact h4 {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #f5f5f5;
+}
+
+.funFactValue {
+  font-size: 32px;
+  font-weight: 700;
+  color: #04b4e0;
+}
