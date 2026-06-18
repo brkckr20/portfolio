@@ -2,9 +2,11 @@
 import { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { useSettings } from "@/context/SettingsContext";
 import styles from "./ContactSection.module.css";
 
 export default function ContactSection() {
+  const { settings } = useSettings();
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [status, setStatus] = useState("idle");
 
@@ -39,7 +41,7 @@ export default function ContactSection() {
               <i className="fa-solid fa-envelope"></i>
               <div>
                 <h4>Email</h4>
-                <p>email@example.com</p>
+                <p>{settings?.email || "email@example.com"}</p>
               </div>
             </div>
             <div className={styles.infoItem}>

@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { useSettings } from "@/context/SettingsContext";
 import styles from "./Header.module.css";
 
 const menuItems = [
@@ -32,6 +33,7 @@ const animOut = [
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
+  const { settings } = useSettings();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -82,11 +84,11 @@ export default function Header() {
       <header className={headerClass}>
         <div className={styles.headerContent}>
           <div className={styles.headerPhoto}>
-            <img src="/images/placeholder.svg" alt="Burak Çakır" />
+            <img src={settings?.photoURL || "/images/placeholder.svg"} alt={settings?.fullName || "Profile"} />
           </div>
           <div className={styles.headerTitles}>
-            <h2>Burak Çakır</h2>
-            <h4>Web Designer</h4>
+            <h2>{settings?.fullName || "Burak Çakır"}</h2>
+            <h4>{settings?.title || "Web Designer"}</h4>
           </div>
         </div>
 
@@ -103,9 +105,9 @@ export default function Header() {
 
         <div className={styles.socialLinks}>
           <ul>
-            <li><a href="#" target="_blank"><i className="fab fa-linkedin-in"></i></a></li>
-            <li><a href="#" target="_blank"><i className="fab fa-facebook-f"></i></a></li>
-            <li><a href="#" target="_blank"><i className="fab fa-twitter"></i></a></li>
+            {settings?.linkedin && <li><a href={settings.linkedin} target="_blank"><i className="fab fa-linkedin-in"></i></a></li>}
+            {settings?.github && <li><a href={settings.github} target="_blank"><i className="fab fa-github"></i></a></li>}
+            {settings?.twitter && <li><a href={settings.twitter} target="_blank"><i className="fab fa-twitter"></i></a></li>}
           </ul>
         </div>
 
@@ -113,7 +115,7 @@ export default function Header() {
           <button className={styles.themeBtn} onClick={toggleTheme}>
             {theme === "dark" ? "☀️" : "🌙"}
           </button>
-          <a href="#" className="btn btn-primary">Download CV</a>
+          <a href={settings?.cvURL || "#"} className="btn btn-primary" target={settings?.cvURL ? "_blank" : "_self"} rel="noopener noreferrer">Download CV</a>
         </div>
 
         <div className={styles.copyrights}>© 2026 All rights reserved.</div>
