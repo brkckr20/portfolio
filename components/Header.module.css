@@ -7,7 +7,7 @@
   max-height: 80vh;
   min-height: inherit;
   text-align: center;
-  padding: 70px 30px 45px;
+  padding: 50px 30px 35px;
   overflow: auto;
 }
 
@@ -116,7 +116,7 @@
 .headerPhoto {
   position: relative;
   width: 180px;
-  margin: 0 auto 30px;
+  margin: 0 auto 20px;
   z-index: 1;
 }
 
@@ -274,7 +274,7 @@
 }
 
 .socialLinks {
-  margin: 20px 0;
+  margin: 15px 0;
 }
 
 .socialLinks ul {

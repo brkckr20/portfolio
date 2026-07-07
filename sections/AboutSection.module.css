@@ -165,3 +165,48 @@
   font-weight: 700;
   color: #04b4e0;
 }
+
+.bioContent {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.bioContent p {
+  margin: 0 0 10px;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.65em;
+}
+
+.bioContent strong {
+  color: var(--text-primary);
+}
+
+.bioContent h1,
+.bioContent h2,
+.bioContent h3 {
+  color: var(--text-primary);
+  margin: 15px 0 10px;
+}
+
+.bioContent a {
+  color: var(--accent-color);
+}
+
+.bioContent ul, .bioContent ol {
+  padding-left: 20px;
+  margin: 0 0 10px;
+  color: var(--text-secondary);
+}
+
+.bioContent li {
+  margin-bottom: 5px;
+}
+
+.bioContent blockquote {
+  border-left: 3px solid var(--accent-color);
+  padding-left: 15px;
+  margin: 10px 0;
+  color: var(--text-muted);
+  font-style: italic;
+}

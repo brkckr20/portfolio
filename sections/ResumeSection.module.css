@@ -1,8 +1,142 @@
-.section {
-  margin-bottom: 60px;
+.blockTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 25px;
 }
 
-.placeholder {
+.blockTitle i {
+  color: #04b4e0;
+  font-size: 22px;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 25px;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 5px;
+  bottom: 5px;
+  width: 2px;
+  background: #333;
+}
+
+.timelineItem {
+  position: relative;
+  padding-bottom: 30px;
+}
+
+.timelineDot {
+  position: absolute;
+  left: -22px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #04b4e0;
+  border: 2px solid #1a1d29;
+  z-index: 1;
+}
+
+.timelineContent {
+  padding-left: 10px;
+}
+
+.timelineDate {
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 4px;
+  background: #04b4e0;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.timelineTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+}
+
+.timelineSubtitle {
+  display: block;
+  font-size: 14px;
   color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.timelineDesc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.empty {
+  color: var(--text-muted);
+  font-size: 14px;
+  font-style: italic;
+}
+
+.skillItem {
+  margin-bottom: 20px;
+}
+
+.skillHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.skillName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.skillPercent {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.skillBar {
+  height: 8px;
+  background: #333;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.skillBarFill {
+  height: 100%;
+  background: #04b4e0;
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.cvButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  border-radius: 30px;
+  background: #04b4e0;
+  color: #fff;
   font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.cvButton:hover {
+  background: #039dc5;
+  color: #fff;
 }

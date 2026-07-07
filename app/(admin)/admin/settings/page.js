@@ -1,7 +1,22 @@
 "use client";
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import "react-quill-new/dist/quill.snow.css";
+
+const QuillEditor = dynamic(() => import("react-quill-new"), { ssr: false });
+
+const QUILL_MODULES = {
+  toolbar: [
+    [{ header: [1, 2, 3, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["blockquote", "code-block"],
+    ["link"],
+    ["clean"],
+  ],
+};
 
 const SETTINGS_ID = "general";
 
@@ -16,6 +31,9 @@ export default function AdminSettings() {
     linkedin: "",
     github: "",
     twitter: "",
+    experience: [],
+    education: [],
+    skills: [],
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState({ profile: false, cv: false, links: false });
@@ -36,6 +54,9 @@ export default function AdminSettings() {
           linkedin: data.linkedin || "",
           github: data.github || "",
           twitter: data.twitter || "",
+          experience: data.experience || [],
+          education: data.education || [],
+          skills: data.skills || [],
         });
       }
       setLoading(false);
@@ -72,6 +93,32 @@ export default function AdminSettings() {
   };
 
 
+
+  const addItem = (field, item) => setForm({ ...form, [field]: [...form[field], item] });
+  const removeItem = (field, index) => setForm({ ...form, [field]: form[field].filter((_, i) => i !== index) });
+  const updateItem = (field, index, key, value) => {
+    const items = [...form[field]];
+    items[index] = { ...items[index], [key]: value };
+    setForm({ ...form, [field]: items });
+  };
+
+  const handleResumeSubmit = async (e) => {
+    e.preventDefault();
+    setSaving((s) => ({ ...s, profile: true }));
+    try {
+      await setDoc(doc(db, "settings", SETTINGS_ID), {
+        experience: form.experience,
+        education: form.education,
+        skills: form.skills,
+        updatedAt: serverTimestamp(),
+      }, { merge: true });
+      showMessage("success", "Resume saved successfully!");
+    } catch (err) {
+      showMessage("error", "Error: " + err.message);
+    } finally {
+      setSaving((s) => ({ ...s, profile: false }));
+    }
+  };
 
   const handleLinksSubmit = async (e) => {
     e.preventDefault();
@@ -120,7 +167,7 @@ export default function AdminSettings() {
       )}
 
       <div className="row g-3">
-        <div className="col-12 col-lg-6">
+        <div className="col-12 col-lg-4">
           <div className="panel" style={{ padding: 24 }}>
             <h2 className="section-title" style={{ marginBottom: 20 }}>
               <i className="fa-solid fa-user"></i><span>Profile</span>
@@ -140,7 +187,14 @@ export default function AdminSettings() {
               </div>
               <div className="form-group">
                 <label>Bio</label>
-                <textarea className="form-control" name="bio" rows={4} value={form.bio} onChange={handleChange}></textarea>
+                <div style={{ marginBottom: 50 }}>
+                  <QuillEditor
+                    value={form.bio}
+                    onChange={(val) => setForm({ ...form, bio: val })}
+                    modules={QUILL_MODULES}
+                    placeholder="Write something about yourself..."
+                  />
+                </div>
               </div>
               <div className="form-group">
                 <label>Profile Photo URL</label>
@@ -158,7 +212,7 @@ export default function AdminSettings() {
             </form>
           </div>
         </div>
-        <div className="col-12 col-lg-6">
+        <div className="col-12 col-lg-4">
           <div className="panel" style={{ padding: 24 }}>
             <h2 className="section-title" style={{ marginBottom: 20 }}>
               <i className="fa-solid fa-file-pdf"></i><span>CV / Resume</span>
@@ -193,6 +247,82 @@ export default function AdminSettings() {
               </div>
               <button type="submit" className="btn-primary-admin" disabled={saving.links}>
                 <i className="fa-solid fa-save"></i> {saving.links ? "Saving..." : "Save Links"}
+              </button>
+            </form>
+          </div>
+        </div>
+        <div className="col-12 col-lg-4">
+          <div className="panel" style={{ padding: 24 }}>
+            <h2 className="section-title" style={{ marginBottom: 20 }}>
+              <i className="fa-solid fa-briefcase"></i><span>Resume</span>
+            </h2>
+            <form onSubmit={handleResumeSubmit}>
+              <div className="form-group">
+                <label>Experience</label>
+                {form.experience.map((exp, i) => (
+                  <div key={i} className="resume-item">
+                    <div className="resume-item-header">
+                      <span>#{i + 1}</span>
+                      <button type="button" className="btn-remove" onClick={() => removeItem("experience", i)}>
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                    <input type="text" className="form-control" placeholder="Company" value={exp.company || ""} onChange={(e) => updateItem("experience", i, "company", e.target.value)} style={{ marginBottom: 6 }} />
+                    <input type="text" className="form-control" placeholder="Position" value={exp.position || ""} onChange={(e) => updateItem("experience", i, "position", e.target.value)} style={{ marginBottom: 6 }} />
+                    <div style={{ display: "flex", gap: 6, marginBottom: 6 }}>
+                      <input type="text" className="form-control" placeholder="Start (e.g. 2020)" value={exp.startDate || ""} onChange={(e) => updateItem("experience", i, "startDate", e.target.value)} />
+                      <input type="text" className="form-control" placeholder="End (or Present)" value={exp.endDate || ""} onChange={(e) => updateItem("experience", i, "endDate", e.target.value)} />
+                    </div>
+                    <textarea className="form-control" rows="2" placeholder="Description" value={exp.description || ""} onChange={(e) => updateItem("experience", i, "description", e.target.value)} />
+                  </div>
+                ))}
+                <button type="button" className="btn-add" onClick={() => addItem("experience", { company: "", position: "", startDate: "", endDate: "", description: "" })}>
+                  <i className="fa-solid fa-plus"></i> Add Experience
+                </button>
+              </div>
+
+              <div className="form-group">
+                <label>Education</label>
+                {form.education.map((edu, i) => (
+                  <div key={i} className="resume-item">
+                    <div className="resume-item-header">
+                      <span>#{i + 1}</span>
+                      <button type="button" className="btn-remove" onClick={() => removeItem("education", i)}>
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                    <input type="text" className="form-control" placeholder="School" value={edu.school || ""} onChange={(e) => updateItem("education", i, "school", e.target.value)} style={{ marginBottom: 6 }} />
+                    <input type="text" className="form-control" placeholder="Degree (e.g. Bachelor's)" value={edu.degree || ""} onChange={(e) => updateItem("education", i, "degree", e.target.value)} style={{ marginBottom: 6 }} />
+                    <input type="text" className="form-control" placeholder="Field of Study" value={edu.field || ""} onChange={(e) => updateItem("education", i, "field", e.target.value)} style={{ marginBottom: 6 }} />
+                    <div style={{ display: "flex", gap: 6 }}>
+                      <input type="text" className="form-control" placeholder="Start Year" value={edu.startYear || ""} onChange={(e) => updateItem("education", i, "startYear", e.target.value)} />
+                      <input type="text" className="form-control" placeholder="End Year" value={edu.endYear || ""} onChange={(e) => updateItem("education", i, "endYear", e.target.value)} />
+                    </div>
+                  </div>
+                ))}
+                <button type="button" className="btn-add" onClick={() => addItem("education", { school: "", degree: "", field: "", startYear: "", endYear: "" })}>
+                  <i className="fa-solid fa-plus"></i> Add Education
+                </button>
+              </div>
+
+              <div className="form-group">
+                <label>Skills</label>
+                {form.skills.map((skill, i) => (
+                  <div key={i} className="resume-item" style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                    <input type="text" className="form-control" placeholder="Skill name" value={skill.name || ""} onChange={(e) => updateItem("skills", i, "name", e.target.value)} style={{ flex: 1 }} />
+                    <input type="number" className="form-control" placeholder="% (0-100)" min="0" max="100" value={skill.level || ""} onChange={(e) => updateItem("skills", i, "level", parseInt(e.target.value) || 0)} style={{ width: 80 }} />
+                    <button type="button" className="btn-remove" onClick={() => removeItem("skills", i)}>
+                      <i className="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                ))}
+                <button type="button" className="btn-add" onClick={() => addItem("skills", { name: "", level: 0 })}>
+                  <i className="fa-solid fa-plus"></i> Add Skill
+                </button>
+              </div>
+
+              <button type="submit" className="btn-primary-admin" disabled={saving.profile}>
+                <i className="fa-solid fa-save"></i> {saving.profile ? "Saving..." : "Save Resume"}
               </button>
             </form>
           </div>

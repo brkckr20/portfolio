@@ -1,0 +1,33 @@
+Merhaba, ben Burak Çakır. Denizli'de yaşıyor, bir şirkette IT personeli olarak çalışıyorum.
+
+6 yıldır web tasarım ile hobi olarak ilgileniyor, aynı süredir tam zamanlı IT sektöründe yer alıyorum. React, CSS, C# ve MSSQL başta olmak üzere frontend ve backend taraflarında projeler geliştiriyorum.
+
+Teknolojiden kopmadan, kendini sürekli güncelleyen bir yazılımcı olarak yeni şeyler öğrenmeyi ve üretmeyi seviyorum.
+
+=== EXPERIENCE ===
+Company: [Şirket Adı]
+Position: IT Personeli
+Start: 2020
+End: Present
+Description: Şirketin IT altyapısının yönetimi, web projelerinin geliştirilmesi ve mevcut sistemlerin bakımı.
+
+Company: [Önceki Şirket]
+Position: Web Tasarımcı (Freelance)
+Start: 2018
+End: 2020
+Description: Çeşitli müşteriler için kurumsal web siteleri tasarımı ve geliştirmesi. React ve CSS ile modern arayüzler oluşturulması.
+
+=== EDUCATION ===
+School: [Okul Adı]
+Degree: Ön Lisans
+Field: Bilgisayar Programcılığı
+Start: 2016
+End: 2018
+
+=== SKILLS ===
+React: 80
+CSS: 85
+C#: 70
+MSSQL: 65
+JavaScript: 75
+Firebase: 60

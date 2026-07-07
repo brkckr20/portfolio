@@ -40,28 +40,23 @@
   min-height: 40px;
 }
 
-.item {
-  text-align: center;
-}
-
 .subtitle {
   color: #aaa;
   font-size: 21px;
   font-weight: 300;
   margin: 5px 0;
   text-align: center;
-  animation: fadeText 0.6s ease;
 }
 
-@keyframes fadeText {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.cursor {
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--accent-color);
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
 }
 
 @media (max-width: 1024px) {
