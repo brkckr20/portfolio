@@ -6,6 +6,7 @@ import { db } from "@/lib/firebase";
 import "react-quill-new/dist/quill.snow.css";
 
 const QuillEditor = dynamic(() => import("react-quill-new"), { ssr: false });
+//burası settingjs
 
 const QUILL_MODULES = {
   toolbar: [
