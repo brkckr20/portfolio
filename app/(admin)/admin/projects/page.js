@@ -63,7 +63,7 @@ export default function AdminProjects() {
                   {project.category && (
                     <p style={{ fontSize: 11, color: "var(--text-muted)", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: 1 }}>{project.category}</p>
                   )}
-                  <p style={{ fontSize: 13, color: "var(--text-muted)", margin: "0 0 8px" }}>{project.description}</p>
+                  <p style={{ fontSize: 13, color: "var(--text-muted)", margin: "0 0 8px" }}>{project.description?.length > 100 ? project.description.slice(0, 100) + "..." : project.description}</p>
                   {project.technologies && (
                     <p style={{ fontSize: 12, color: "#04b4e0", margin: "0 0 12px" }}>{project.technologies}</p>
                   )}

@@ -5,8 +5,16 @@ import styles from "./ResumeSection.module.css";
 export default function ResumeSection() {
   const { settings } = useSettings();
 
-  const experience = settings?.experience || [];
-  const education = settings?.education || [];
+  const experience = (settings?.experience || []).sort((a, b) => {
+    const aEnd = a.endDate || a.startDate || "";
+    const bEnd = b.endDate || b.startDate || "";
+    return bEnd.localeCompare(aEnd);
+  });
+  const education = (settings?.education || []).sort((a, b) => {
+    const aEnd = a.endYear || a.startYear || "";
+    const bEnd = b.endYear || b.startYear || "";
+    return bEnd.localeCompare(aEnd);
+  });
   const skills = settings?.skills || [];
 
   return (

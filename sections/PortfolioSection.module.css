@@ -118,11 +118,17 @@
 
 .overlay h4 {
   color: #fff;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   margin: 0;
   text-align: center;
   padding: 10px;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.card:hover .overlay h4 {
+  transform: translateY(0);
 }
 
 .empty {

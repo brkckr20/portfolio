@@ -6,7 +6,6 @@ import { db } from "@/lib/firebase";
 import "react-quill-new/dist/quill.snow.css";
 
 const QuillEditor = dynamic(() => import("react-quill-new"), { ssr: false });
-//burası settingjs
 
 const QUILL_MODULES = {
   toolbar: [
@@ -35,6 +34,7 @@ export default function AdminSettings() {
     experience: [],
     education: [],
     skills: [],
+    categories: [],
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState({ profile: false, cv: false, links: false });
@@ -58,6 +58,7 @@ export default function AdminSettings() {
           experience: data.experience || [],
           education: data.education || [],
           skills: data.skills || [],
+          categories: data.categories || [],
         });
       }
       setLoading(false);
@@ -118,6 +119,22 @@ export default function AdminSettings() {
       showMessage("error", "Error: " + err.message);
     } finally {
       setSaving((s) => ({ ...s, profile: false }));
+    }
+  };
+
+  const handleCategoriesSubmit = async (e) => {
+    e.preventDefault();
+    setSaving((s) => ({ ...s, categories: true }));
+    try {
+      await setDoc(doc(db, "settings", SETTINGS_ID), {
+        categories: form.categories,
+        updatedAt: serverTimestamp(),
+      }, { merge: true });
+      showMessage("success", "Categories saved!");
+    } catch (err) {
+      showMessage("error", "Error: " + err.message);
+    } finally {
+      setSaving((s) => ({ ...s, categories: false }));
     }
   };
 
@@ -248,6 +265,87 @@ export default function AdminSettings() {
               </div>
               <button type="submit" className="btn-primary-admin" disabled={saving.links}>
                 <i className="fa-solid fa-save"></i> {saving.links ? "Saving..." : "Save Links"}
+              </button>
+            </form>
+          </div>
+
+          <div className="panel" style={{ padding: 24, marginTop: 16 }}>
+            <h2 className="section-title" style={{ marginBottom: 20 }}>
+              <i className="fa-solid fa-tags"></i><span>Portfolio Categories</span>
+            </h2>
+            <form onSubmit={handleCategoriesSubmit}>
+              <div className="form-group">
+                <label>Categories</label>
+                <div style={{ display: "flex", gap: 6, marginBottom: 10 }}>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Add a category..."
+                    value={form._newCategory || ""}
+                    onChange={(e) => setForm({ ...form, _newCategory: e.target.value })}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        const val = form._newCategory?.trim();
+                        if (val && !form.categories.includes(val)) {
+                          setForm({ ...form, categories: [...form.categories, val], _newCategory: "" });
+                        }
+                      }
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className="btn-primary-admin"
+                    onClick={() => {
+                      const val = form._newCategory?.trim();
+                      if (val && !form.categories.includes(val)) {
+                        setForm({ ...form, categories: [...form.categories, val], _newCategory: "" });
+                      }
+                    }}
+                  >
+                    <i className="fa-solid fa-plus"></i>
+                  </button>
+                </div>
+                {form.categories.length === 0 && (
+                  <p style={{ fontSize: 13, color: "var(--text-muted)" }}>No categories yet.</p>
+                )}
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {form.categories.map((cat, i) => (
+                    <span key={i} style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 6,
+                      padding: "4px 10px",
+                      borderRadius: 20,
+                      background: "#04b4e020",
+                      color: "#04b4e0",
+                      fontSize: 13,
+                    }}>
+                      {cat}
+                      <button
+                        type="button"
+                        onClick={() => setForm({
+                          ...form,
+                          categories: form.categories.filter((_, j) => j !== i)
+                        })}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          color: "#04b4e0",
+                          cursor: "pointer",
+                          padding: 0,
+                          fontSize: 14,
+                          opacity: 0.7,
+                        }}
+                      >
+                        &times;
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <button type="submit" className="btn-primary-admin" disabled={saving.categories}>
+                <i className="fa-solid fa-save"></i> {saving.categories ? "Saving..." : "Save Categories"}
               </button>
             </form>
           </div>

@@ -3,13 +3,24 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { useSettings } from "@/context/SettingsContext";
 
 export default function AddProject() {
   const router = useRouter();
+  const { settings } = useSettings();
+  const categories = settings?.categories || [];
   const [form, setForm] = useState({ title: "", description: "", category: "", technologies: "", liveUrl: "", image: "" });
+  const [customCategory, setCustomCategory] = useState(false);
   const [saving, setSaving] = useState(false);
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    if (e.target.name === "category" && e.target.value === "__custom__") {
+      setCustomCategory(true);
+      setForm({ ...form, category: "" });
+    } else {
+      setForm({ ...form, [e.target.name]: e.target.value });
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,7 +69,45 @@ export default function AddProject() {
             <div className="col-12 col-sm-6">
               <div className="form-group">
                 <label>Category</label>
-                <input type="text" className="form-control" name="category" placeholder="Web App, Mobile, Design..." value={form.category} onChange={handleChange} />
+                {!customCategory ? (
+                  <div style={{ display: "flex", gap: 6 }}>
+                    <select
+                      className="form-control"
+                      name="category"
+                      value={form.category}
+                      onChange={handleChange}
+                      style={{ flex: 1 }}
+                    >
+                      <option value="">Select category</option>
+                      {categories.length === 0 && (
+                        <option value="" disabled>No categories yet — add in Settings</option>
+                      )}
+                      {categories.map((cat) => (
+                        <option key={cat} value={cat}>{cat}</option>
+                      ))}
+                      <option value="__custom__">+ Type custom category</option>
+                    </select>
+                  </div>
+                ) : (
+                  <div style={{ display: "flex", gap: 6 }}>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="category"
+                      placeholder="Enter category..."
+                      value={form.category}
+                      onChange={handleChange}
+                    />
+                    <button
+                      type="button"
+                      className="btn-outline-secondary"
+                      onClick={() => { setCustomCategory(false); setForm({ ...form, category: "" }); }}
+                      style={{ flexShrink: 0 }}
+                    >
+                      <i className="fa-solid fa-list"></i>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
             <div className="col-12 col-sm-6">

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
+import { SettingsProvider } from "@/context/SettingsContext";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminNavbar from "@/components/admin/AdminNavbar";
 import "@/styles/admin.css";
@@ -43,7 +44,9 @@ function AdminShell({ children }) {
 export default function AdminPanelLayout({ children }) {
   return (
     <AuthProvider>
-      <AdminShell>{children}</AdminShell>
+      <SettingsProvider>
+        <AdminShell>{children}</AdminShell>
+      </SettingsProvider>
     </AuthProvider>
   );
 }

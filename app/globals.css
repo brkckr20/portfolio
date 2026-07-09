@@ -341,27 +341,35 @@ img {
 }
 
 /* Scrollbar */
-.ps > .ps__scrollbar-y-rail {
-  margin-right: 10px;
-  margin-top: 30px;
-  margin-bottom: 30px;
+.animated-section::-webkit-scrollbar {
+  width: 6px;
+}
+
+.animated-section::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.animated-section::-webkit-scrollbar-thumb {
+  background-color: #b5b6b7;
   border-radius: 20px;
 }
 
-.ps > .ps__scrollbar-y-rail > .ps__scrollbar-y {
-  background-color: #b5b6b7;
-}
-
-.ps:hover > .ps__scrollbar-y-rail:hover {
-  background-color: #444;
-}
-
-.ps:hover > .ps__scrollbar-y-rail:hover > .ps__scrollbar-y {
+.animated-section::-webkit-scrollbar-thumb:hover {
   background-color: var(--accent-color);
 }
 
-.ps > .ps__scrollbar-y-rail {
-  width: 12px;
+.animated-section {
+  scrollbar-width: thin;
+  scrollbar-color: #b5b6b7 transparent;
+}
+
+@media (hover: hover) {
+  .animated-section {
+    scrollbar-color: #b5b6b7 transparent;
+  }
+  .animated-section:hover {
+    scrollbar-color: var(--accent-color) transparent;
+  }
 }
 
 /* Button Base */

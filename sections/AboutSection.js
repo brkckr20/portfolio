@@ -6,7 +6,7 @@ export default function AboutSection() {
   const { settings } = useSettings();
 
   const info = [
-    { title: "e-mail", value: settings?.email || "email@example.com" },
+    { title: "E-Mail", value: settings?.email || "email@example.com" },
     { title: "Phone", value: "+90 541 621 50 73" },
   ];
 
