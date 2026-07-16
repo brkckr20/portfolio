@@ -51,7 +51,7 @@ export default function Sidebar() {
           {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
         </button>
 
-        <div className={styles.copyright}>© 2026 All rights reserved.</div>
+        <div className={styles.copyright}>© 2020 - {new Date().getFullYear()} All rights reserved.</div>
       </div>
     </header>
   );

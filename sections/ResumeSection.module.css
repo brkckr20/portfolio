@@ -9,7 +9,7 @@
 }
 
 .blockTitle i {
-  color: #04b4e0;
+  color: var(--accent-color);
   font-size: 22px;
 }
 
@@ -25,7 +25,7 @@
   top: 5px;
   bottom: 5px;
   width: 2px;
-  background: #333;
+  background: var(--border-color);
 }
 
 .timelineItem {
@@ -40,8 +40,8 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #04b4e0;
-  border: 2px solid #1a1d29;
+  background: var(--accent-color);
+  border: 2px solid var(--section-bg);
   z-index: 1;
 }
 
@@ -53,7 +53,7 @@
   display: inline-block;
   padding: 2px 12px;
   border-radius: 4px;
-  background: #04b4e0;
+  background: var(--accent-color);
   color: #fff;
   font-size: 12px;
   font-weight: 500;
@@ -110,14 +110,14 @@
 
 .skillBar {
   height: 8px;
-  background: #333;
+  background: var(--surface-bg);
   border-radius: 4px;
   overflow: hidden;
 }
 
 .skillBarFill {
   height: 100%;
-  background: #04b4e0;
+  background: var(--accent-color);
   border-radius: 4px;
   transition: width 0.6s ease;
 }
@@ -128,7 +128,7 @@
   gap: 10px;
   padding: 14px 32px;
   border-radius: 30px;
-  background: #04b4e0;
+  background: var(--accent-color);
   color: #fff;
   font-size: 16px;
   font-weight: 600;

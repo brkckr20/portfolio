@@ -4,6 +4,7 @@
   --accent-color: #04b4e0;
   --section-bg: #222;
   --card-bg: #444;
+  --surface-bg: #333;
   --text-primary: #f5f5f5;
   --text-secondary: #d5d5d5;
   --text-muted: #bbb;
@@ -11,12 +12,13 @@
 }
 
 [data-theme="light"] {
-  --body-bg: #e8f4f8;
-  --accent-color: #04b4e0;
+  --body-bg: #d5eef5;
+  --accent-color: #0499c0;
   --section-bg: #ffffff;
-  --card-bg: #f0f0f0;
-  --text-primary: #333333;
-  --text-secondary: #666666;
-  --text-muted: #999999;
-  --border-color: #ddd;
+  --card-bg: #eef1f4;
+  --surface-bg: #f4f6f8;
+  --text-primary: #1f2733;
+  --text-secondary: #4a5560;
+  --text-muted: #7a8590;
+  --border-color: #d8dee4;
 }

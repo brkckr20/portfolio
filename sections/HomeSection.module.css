@@ -20,7 +20,7 @@
 }
 
 .titleBlock h2 {
-  color: #f5f5f5;
+  color: var(--text-primary);
   font-size: 60px;
   line-height: 74px;
   margin: 0;
@@ -41,7 +41,7 @@
 }
 
 .subtitle {
-  color: #aaa;
+  color: var(--text-muted);
   font-size: 21px;
   font-weight: 300;
   margin: 5px 0;

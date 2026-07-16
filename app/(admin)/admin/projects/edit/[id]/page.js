@@ -14,6 +14,7 @@ export default function EditProject() {
   const [customCategory, setCustomCategory] = useState(false);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [imageError, setImageError] = useState("");
 
   useEffect(() => {
     const fetch = async () => {
@@ -38,6 +39,54 @@ export default function EditProject() {
     } else {
       setForm({ ...form, [e.target.name]: e.target.value });
     }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImageError("");
+
+    if (!file.type.startsWith("image/")) {
+      setImageError("Please select an image file.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const img = new Image();
+      img.onload = () => {
+        // Resize to max 1200px on the longest side to stay well under Firestore's 1MB doc limit
+        const MAX = 1200;
+        let { width, height } = img;
+        if (width > height && width > MAX) {
+          height = Math.round((height * MAX) / width);
+          width = MAX;
+        } else if (height > MAX) {
+          width = Math.round((width * MAX) / height);
+          height = MAX;
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+
+        // Firestore document limit is ~1MB; base64 adds ~33% overhead.
+        if (dataUrl.length > 900000) {
+          setImageError("Image is too large even after compression. Please use a smaller image.");
+          return;
+        }
+
+        setForm((f) => ({ ...f, image: dataUrl }));
+      };
+      img.onerror = () => setImageError("Could not read the image file.");
+      img.src = ev.target.result;
+    };
+    reader.onerror = () => setImageError("Could not read the file.");
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = async (e) => {
@@ -146,8 +195,23 @@ export default function EditProject() {
             </div>
             <div className="col-12 col-sm-6">
               <div className="form-group">
-                <label>Image URL</label>
-                <input type="url" className="form-control" name="image" placeholder="https://example.com/image.jpg" value={form.image} onChange={handleChange} />
+                <label>Project Image</label>
+                <input type="file" className="form-control" accept="image/*" onChange={handleImageChange} />
+                {imageError && (
+                  <p style={{ color: "#ef4444", fontSize: 13, margin: "6px 0 0" }}>{imageError}</p>
+                )}
+                {form.image && (
+                  <div style={{ marginTop: 10, display: "flex", alignItems: "center", gap: 12 }}>
+                    <img src={form.image} alt="Preview" style={{ width: 80, height: 60, objectFit: "cover", borderRadius: 6 }} />
+                    <button
+                      type="button"
+                      className="btn-outline-secondary"
+                      onClick={() => setForm({ ...form, image: "" })}
+                    >
+                      <i className="fa-solid fa-trash"></i> Remove
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -118,7 +118,7 @@ export default function Header() {
           <a href={settings?.cvURL || "#"} className="btn btn-primary" target={settings?.cvURL ? "_blank" : "_self"} rel="noopener noreferrer">Download CV</a>
         </div>
 
-        <div className={styles.copyrights}>© 2026 All rights reserved.</div>
+        <div className={styles.copyrights}>© 2020 - {new Date().getFullYear()} All rights reserved.</div>
       </header>
     </>
   );

@@ -34,7 +34,7 @@ function AdminShell({ children }) {
           {children}
         </div>
         <footer className="admin-footer">
-          <span>© 2026 adminHMD. All rights reserved.</span>
+          <span>© 2020 - {new Date().getFullYear()} adminHMD. All rights reserved.</span>
         </footer>
       </div>
     </div>
